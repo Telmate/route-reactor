@@ -1,6 +1,6 @@
 {
   "name": "route-reactor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Framework-agnostic client-side router (uses page.js, plays well with React)",
   "main": "router.js",
   "scripts": {
