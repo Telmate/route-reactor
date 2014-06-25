@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+    Promise = require('bluebird');
 
 var MyReactComponent = React.createClass({
   render: function() {
@@ -12,14 +13,14 @@ var MyReactComponent = React.createClass({
 });
 
 // configure a renderer, in this case for ReactJS page templates
-var reactRenderer = require('..').reactRenderer({
+var reactRenderer = require('../router').reactRenderer({
   rootEl: document.getElementById('app-container'),
   // transitionClass: MyReactLoadingPage,
   transitionTime: 2000
 });
 
 // configure the router, passing in the renderer
-var router = require('..')(reactRenderer);
+var router = require('../router')(reactRenderer);
 
 // define a page
 router.page('/', {
@@ -32,6 +33,14 @@ router.page('/', {
     // resolves to, in this case 'hello!'
     this.setProp('async', Promise.resolve('hello!').delay(1000));
   }
+});
+
+// obvserve routing events
+router.on(router.events.WILL_NAVIGATE, console.log.bind(console));
+router.on(router.events.DID_NAVIGATE, console.log.bind(console));
+router.on(router.events.CANCELLED, console.log.bind(console));
+router.on(router.events.ERROR, function(err, url, query) {
+  console.warn(err.stack || err.message);
 });
 
 // start the router 

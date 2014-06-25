@@ -63,7 +63,8 @@ Run tests:
 
 Run examples:
 
-	npm start
+	# leave off '--open' to avoid opening a browser
+	npm start --port 9000 --open
 
 ## License
 

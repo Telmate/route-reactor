@@ -4,33 +4,43 @@ var ecstatic = require('ecstatic');
 var path = require('path');
 var fs = require('fs');
 var open = require('open');
-var browserify = require('browserify');
 
-var bundler = browserify();
-bundler.add(path.resolve(__dirname, '..', 'examples', 'index.js'));
-bundler.bundle(function(err, src) {
-  if (err) {
-    return console.warn(err);
+var argv = require('minimist')(process.argv.slice(2), {
+  boolean: ['open'],
+  string: ['port'],
+  default: {
+    port: 9000,
+    open: false
   }
-  fs.writeFileSync(path.resolve(__dirname, '..', 'examples', '.tmp', 'dist.js'), src, 'utf8');
 });
 
+var root = path.resolve(__dirname, '..', 'examples');
+console.log(root);
+
 var app = express();
+
+// static files
 app.use(ecstatic({
-  root: path.resolve(__dirname, '..', 'examples', '.tmp'),
-  handleError: false,
-  autoIndex: true
-}));
-app.use(ecstatic({
-  root: path.resolve(__dirname, '..', 'examples'),
-  handleError: false,
-  autoIndex: true
+  root: root,
+  autoIndex: true,
+  showDir: false,
+  baseDir: '/',
+  handleErrors: false
 }));
 
-// TODO: render index.html when file is missing
-// app.get('/*', function() {});
+// missing files go to index.html
+app.use(function(req, res, next) {
+  if (req.headers && req.headers['x-requested-with'] === 'XMLHttpRequest') {
+    return next();
+  }
+  res.statusCode = 200;
+  res.write(fs.readFileSync(path.resolve(root, 'index.html'), 'utf8'));
+  res.end();
+});
 
-http.createServer(app).listen(8080, function() {
-  console.log('Listening on localhost:8080');
-  open('http://localhost:8080');
+http.createServer(app).listen(argv.port, function() {
+  console.log('Listening on localhost:' + argv.port);
+  if (argv.open) {
+    open('http://localhost:' + argv.port);
+  }
 });

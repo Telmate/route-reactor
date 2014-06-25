@@ -60,7 +60,7 @@ ReactRenderer.prototype.getTransitionTime = function react_renderer_get_transiti
 };
 
 ReactRenderer.prototype.setTransitionTime = function react_renderer_set_transition_time(time) {
-  if (typeof time === 'number' && time >== 0) {
+  if (typeof time === 'number' && time >= 0) {
     this._transitionTime = time;
   }
 };

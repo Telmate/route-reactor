@@ -1,5 +1,6 @@
 var polyfill = require('html5-history-api'),
     util = require('util'),
+    assert = require('assert'),
     _ = require('lodash'),
     events = require('events'),
     EventEmitter = events.EventEmitter,
@@ -53,6 +54,14 @@ Router.prototype.events = Router.EVENTS = {
 Router.prototype.configure = function router_configure(renderer, options) {
   options = options || {};
   this._renderer = renderer;
+
+  assert(renderer !== null, 'invalid renderer - null - see documentation');
+  assert(typeof renderer.notFound === 'function', 'invalid renderer - notFound() - see documentation');
+  assert(typeof renderer.error === 'function', 'invalid renderer - error() - see documentation');
+  assert(typeof renderer.loading === 'function', 'invalid renderer - loading() - see documentation');
+  assert(typeof renderer.render === 'function', 'invalid renderer - render() - see documentation');
+  assert(typeof renderer.getTransitionTime === 'function', 'invalid renderer - getTransitionTime() - see documentation');
+
   if (options.base) {
     page.base(options.base);
   }
@@ -210,6 +219,18 @@ Router.prototype._render = function router_render(ctx, fn) {
   .finally(function() {
     this._routerPromise = null;
   });
+};
+
+/**
+ * emit(event, args...)
+ *
+ * override the emit function to always send the event name as first arg
+ */
+Router.prototype.emit = function router_emit() {
+  var args = _.toArray(arguments);
+  args.unshift(args[0]);
+  EventEmitter.prototype.emit.apply(this, args);
+
 };
 
 module.exports = function getInstance(renderer, options) {
