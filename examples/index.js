@@ -13,14 +13,14 @@ var MyReactComponent = React.createClass({
 });
 
 // configure a renderer, in this case for ReactJS page templates
-var reactRenderer = require('../router').reactRenderer({
+var reactRenderer = require('../index').reactRenderer({
   rootEl: document.getElementById('app-container'),
   // transitionClass: MyReactLoadingPage,
   transitionTime: 2000
 });
 
 // configure the router, passing in the renderer
-var router = require('../router')(reactRenderer);
+var router = require('../index')(reactRenderer);
 
 // define a page
 router.page('/', {

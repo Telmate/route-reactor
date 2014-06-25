@@ -1,15 +1,12 @@
-var polyfill = require('html5-history-api'),
+var assert = require('assert'),
     util = require('util'),
-    assert = require('assert'),
-    _ = require('lodash'),
     events = require('events'),
     EventEmitter = events.EventEmitter,
+    _ = require('lodash'),
     page = require('page'),
     querystring = require('querystring'),
     Promise = require('bluebird'),
-    RouterPage = require('./router_page'),
-    reactRenderer = require('./react_renderer'),
-    routerInstance = null;
+    RouterPage = require('./router_page');
 
 var Router = function router() {
   EventEmitter.call(this);
@@ -230,15 +227,6 @@ Router.prototype.emit = function router_emit() {
   var args = _.toArray(arguments);
   args.unshift(args[0]);
   EventEmitter.prototype.emit.apply(this, args);
-
 };
 
-module.exports = function getInstance(renderer, options) {
-  if (!routerInstance) {
-    routerInstance = new Router();
-  }
-  routerInstance.configure(renderer, options)
-  return routerInstance;
-};
-
-module.exports.reactRenderer = reactRenderer;
+module.exports = Router;

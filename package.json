@@ -2,7 +2,7 @@
   "name": "route-reactor",
   "version": "0.0.3",
   "description": "Framework-agnostic client-side router (uses page.js, plays well with React)",
-  "main": "router.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec 'test/**/*.js'",
     "build": "browserify examples/index.js -o examples/dist.js",
