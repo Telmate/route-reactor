@@ -6,7 +6,8 @@ var polyfill = require('html5-history-api'),
     page = require('page'),
     querystring = require('querystring'),
     Promise = require('bluebird'),
-    RouterPage = require('./router-page'),
+    RouterPage = require('./router_page'),
+    reactRenderer = require('./react_renderer'),
     routerInstance = null;
 
 var Router = function router() {
@@ -218,3 +219,5 @@ module.exports = function getInstance(renderer, options) {
   routerInstance.configure(renderer, options)
   return routerInstance;
 };
+
+module.exports.reactRenderer = reactRenderer;
