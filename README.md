@@ -7,9 +7,21 @@ Framework-agnostic client-side router (uses page.js, plays well with React)
 
 `route-reactor` offers a simple API on top of [page.js](https://github.com/visionmedia/page.js) for routing client-side applications. Routes are specified with expressjs-style strings, such as `/user/:userId` or `/posts/*`. For a given route you define a `page` which specifies the resources for that page and the template that will be rendered. `route-reactor` handles asyncrhonous loading those resources and then rendering the page. During resource loading it will render a loading page, offering a smoother page transition experience than typical routers.
 
+## Installation
+
+Install:
+
+	npm install --save route-reactor
+
+then:
+
+	var routeReactor = require('route-reactor');
+
 ## Usage
 
 Note that `route-reactor` is meant for use via browserify or other front-end packagers.
+
+See a full, working version of the below in `examples/index.js` - run it with `npm start`.
 
 ```javascript
 // configure a renderer, in this case for ReactJS page templates
@@ -61,10 +73,10 @@ Run tests:
 
 	npm test
 
-Run examples:
+Run examples (leave off `--open` to skip opening a browser):
 
-	# leave off '--open' to avoid opening a browser
-	npm start --port 9000 --open
+	npm run build
+	node scripts/examples.js --port 9000 --open
 
 ## License
 

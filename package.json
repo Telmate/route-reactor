@@ -5,7 +5,8 @@
   "main": "router.js",
   "scripts": {
     "test": "mocha --reporter spec 'test/**/*.js'",
-    "start": "browserify examples/index.js -o examples/dist.js && node scripts/examples.js"
+    "build": "browserify examples/index.js -o examples/dist.js",
+    "start": "node scripts/examples.js"
   },
   "author": "Joseph Savona <joe@josephsavona.com>",
   "license": "MIT License",
